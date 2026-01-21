@@ -4,6 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quitemate/login.dart';
 import 'package:quitemate/profile.dart';
 import 'package:quitemate/register.dart';
+import 'package:quitemate/location.dart';
+import 'package:quitemate/money.dart';
+import 'package:quitemate/calendar.dart';
+import 'package:quitemate/leaderboard.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -46,6 +50,25 @@ class _HomeState extends State<Home> {
         // Handle error silently
       }
     }
+  }
+
+  void _navigateToPage(Widget page) {
+    if (_currentUser == null) {
+      // Show login prompt if user is not logged in
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please log in to access this feature'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+    
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => page),
+    );
   }
 
   @override
@@ -168,8 +191,8 @@ class _HomeState extends State<Home> {
                       ),
                     ],
                   ),
-                  child: Column(
-                    children: const [
+                  child: const Column(
+                    children: [
                       Text(
                         'About Us',
                         style: TextStyle(
@@ -209,21 +232,53 @@ class _HomeState extends State<Home> {
       ),
       bottomNavigationBar: BottomAppBar(
         color: const Color(0xFF303870),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: const BoxDecoration(
-                color: Color(0xFFFABA5C),
-                shape: BoxShape.circle,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              // Money/Savings
+              IconButton(
+                icon: const Icon(
+                  Icons.attach_money,
+                  color: Color(0xFFFABA5C),
+                  size: 28,
+                ),
+                onPressed: () => _navigateToPage(const Money()),
+                tooltip: 'Savings',
               ),
-              child: const Icon(Icons.attach_money, color: Colors.white, size: 24),
-            ),
-            const Icon(Icons.calendar_today, color: Color(0xFFFABA5C), size: 24),
-            const Icon(Icons.emoji_events, color: Color(0xFFFABA5C), size: 24),
-            const Icon(Icons.location_on, color: Color(0xFFFABA5C), size: 24),
-          ],
+              // Calendar
+              IconButton(
+                icon: const Icon(
+                  Icons.calendar_today,
+                  color: Color(0xFFFABA5C),
+                  size: 28,
+                ),
+                onPressed: () => _navigateToPage(const Calendar()),
+                tooltip: 'Calendar',
+              ),
+              // Leaderboard
+              IconButton(
+                icon: const Icon(
+                  Icons.emoji_events,
+                  color: Color(0xFFFABA5C),
+                  size: 28,
+                ),
+                onPressed: () => _navigateToPage(const Leaderboard()),
+                tooltip: 'Leaderboard',
+              ),
+              // Location
+              IconButton(
+                icon: const Icon(
+                  Icons.location_on,
+                  color: Color(0xFFFABA5C),
+                  size: 28,
+                ),
+                onPressed: () => _navigateToPage(const Location()),
+                tooltip: 'Find Bins',
+              ),
+            ],
+          ),
         ),
       ),
     );
