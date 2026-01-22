@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quitemate/calendar.dart';
+import 'package:quitemate/chatbot.dart';
 import 'package:quitemate/leaderboard.dart';
 import 'package:quitemate/location.dart';
 import 'package:quitemate/login.dart';
@@ -25,6 +26,7 @@ void main() async {
       '/money': (context) => const Money(),
       '/calendar': (context) => const Calendar(),
       '/leaderboard': (context) => const Leaderboard(),
+      '/chatbot': (context) => const ChatBot(),
 
     },
   ));
