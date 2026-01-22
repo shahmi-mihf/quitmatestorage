@@ -8,6 +8,7 @@ import 'package:quitemate/location.dart';
 import 'package:quitemate/money.dart';
 import 'package:quitemate/calendar.dart';
 import 'package:quitemate/leaderboard.dart';
+import 'package:quitemate/chatbot.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -216,13 +217,47 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 const SizedBox(height: 40),
-                Container(
-                  padding: const EdgeInsets.all(15),
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFFABA5C),
-                    shape: BoxShape.circle,
+                // ChatBot Button with Tooltip
+                Tooltip(
+                  message: 'ChatBot',
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF303870),
+                    borderRadius: BorderRadius.circular(8),
                   ),
-                  child: const Icon(Icons.chat_bubble, color: Colors.white, size: 30),
+                  textStyle: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  preferBelow: true,
+                  verticalOffset: 20,
+                  child: InkWell(
+                    onTap: () => _navigateToPage(const ChatBot()),
+                    borderRadius: BorderRadius.circular(50),
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFFFABA5C),
+                        shape: BoxShape.circle,
+                        boxShadow: [
+                          BoxShadow(
+                            color: const Color(0xFFFABA5C).withOpacity(0.3),
+                            blurRadius: 10,
+                            offset: const Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child:    IconButton(
+                            icon: const Icon(
+                            Icons.chat_bubble,
+                            color: Colors.white,
+                            size: 28,
+                          ),
+                          onPressed: () => _navigateToPage(const ChatBot()),
+                          tooltip: 'ChatBot',
+                      ),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 20),
               ],
